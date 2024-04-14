@@ -9,32 +9,24 @@ HEIGHT = 800
 
 # Загрузка изображений
 bg = Actor('background.png')
-astronaut = Actor('astronaut')
-ship = Actor('ship')
-astronaut.pos = (451, 748)
-ship.x, ship.y = (450, 80)
+fish = Actor('fish')
+cave = Actor('cave')
+fish.pos = (451, 748)
+cave.x, cave.y = (450, 80)
 
 
 
 coordinates = [(80, 63), (288, 176), (90, 258), (428, 293),
                (219, 388), (80, 528), (358, 541), (195, 691)]
 obstacles = []
-""""
-for coordinate in coordinates:
-    img = choice(['shark', 'shark2'])
-    obj = Actor(img)
-    obj.x = coordinate[0]
-    obj.y = coordinate[1]
-    obstacles.append(obj)
-"""
 for coordinate in coordinates:
     if coordinate[0] > WIDTH//2 :
-        obj = Actor("shark")
+        obj = Actor('shark')
         obj.x = coordinate[0]
         obj.y = coordinate[1]
         obstacles.append(obj)
     else:
-        obj = Actor("shark2")
+        obj = Actor('shark2')
         obj.x = coordinate[0]
         obj.y = coordinate[1]
         obstacles.append(obj)
@@ -52,27 +44,27 @@ def draw():
     if win:
         screen.draw.text(f'ПОБЕДА!', center=(WIDTH//2, HEIGHT//2), color='green', fontsize=100)
         return
-    astronaut.draw()
-    ship.draw()
+    fish.draw()
+    cave.draw()
     for obstacle in obstacles:
         obstacle.draw()
 
 
 def update(dt):
     global game_over, win
-    astronaut.x += x
-    astronaut.y += y
-    if astronaut.left < 0:
-        astronaut.left = 0
-    if astronaut.right > WIDTH:
-        astronaut.right = WIDTH
-    if astronaut.top < 0:
-        astronaut.top = 0
-    if astronaut.bottom > HEIGHT:
-        astronaut.bottom = HEIGHT
-    if astronaut.collidelist(obstacles) != -1:
+    fish.x += x
+    fish.y += y
+    if fish.left < 0:
+        fish.left = 0
+    if fish.right > WIDTH:
+        fish.right = WIDTH
+    if fish.top < 0:
+        fish.top = 0
+    if fish.bottom > HEIGHT:
+        fish.bottom = HEIGHT
+    if fish.collidelist(obstacles) != -1:
         game_over = True
-    if astronaut.colliderect(ship):
+    if fish.colliderect(cave):
         win = True
 
 def on_key_down(key):
