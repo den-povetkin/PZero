@@ -13,8 +13,7 @@ music.set_volume(0.5)
 tracks = ['handel_mp3','handel_ogg']
 
 bg = Actor('background.png')
-img = choice(['fish', 'fish2'])
-fish = Actor(img)
+fish = Actor('fish')
 cave = Actor('cave')
 vol =Actor('vol_on')
 start=Actor('start')
@@ -107,8 +106,10 @@ def update(dt):
         fish.top = 0
     if fish.bottom > HEIGHT:
         fish.bottom = HEIGHT
-    if fish.collidelist(obstacles) != -1:
-        game_over = True
+    #if fish.collidelist(obstacles) != -1:
+    for obstacle in obstacles:
+        if fish.colliderect(obstacle):
+            game_over = True
     if fish.colliderect(cave):
         win = True
     for coin in coins:
@@ -141,23 +142,22 @@ def on_key_down(key):
         game_over = False
         fish.pos = (5, 748)
     if key == keys.DOWN:
-        y = 1
+        y = 0.5
         walking()
     if key == keys.UP:
-        y = -1
+        y = -0.5
         walking()
     if key == keys.LEFT:
-        x = -1
+        x = -0.5
         walking()
     if key == keys.RIGHT:
-        x = 1
+        x = 0.5
         walking()
 
 
 
 def on_mouse_down(pos):
     global playing, start_game
-    print(pos)
     if  vol.collidepoint(pos):
         if not playing:
             t = tracks.pop(0)
