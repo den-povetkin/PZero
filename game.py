@@ -7,18 +7,12 @@ TITLE = 'shark'
 WIDTH = 518
 HEIGHT = 800
 
-#music.set_volume(0.5)
-#music.play('hhavok-main')
 playing = None
 
 music.set_volume(0.5)
 
-tracks = [
-    'handel_mp3',
-    'handel_ogg',
-]
+tracks = ['handel_mp3','handel_ogg']
 
-# Загрузка изображений
 bg = Actor('background.png')
 img = choice(['fish', 'fish2'])
 fish = Actor(img)
@@ -133,8 +127,7 @@ def on_mouse_down():
         playing = t
         tracks.append(t)
     else:
-        music.stop(t)
-
+        music.stop()
 
 def on_music_end():
     global playing
