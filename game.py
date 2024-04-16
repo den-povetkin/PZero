@@ -12,12 +12,27 @@ music.set_volume(0.5)
 
 tracks = ['handel_mp3','handel_ogg']
 
+class Player(Actor):
+    def __init__(self, image, pos, **kwargs):
+        super().__init__(image, pos, **kwargs)
+        self.image = 'fish'
+        self.pos = pos
+        
+    def walking(self):
+        global walk
+        if walk:
+            fish.image = "fish"
+            walk = False
+        else:
+            fish.image = "fish2"
+            walk = True 
+
 bg = Actor('background.png')
-fish = Actor('fish')
+fish = Player('fish', (5,748))
 cave = Actor('cave')
 vol =Actor('vol_on')
 start=Actor('start')
-fish.pos = (5, 748)
+#fish.pos = (5, 748)
 cave.x, cave.y = (450, 150)
 
 
@@ -143,16 +158,16 @@ def on_key_down(key):
         fish.pos = (5, 748)
     if key == keys.DOWN:
         y = 0.5
-        walking()
+        fish.walking()
     if key == keys.UP:
         y = -0.5
-        walking()
+        fish.walking()
     if key == keys.LEFT:
         x = -0.5
-        walking()
+        fish.walking()
     if key == keys.RIGHT:
         x = 0.5
-        walking()
+        fish.walking()
 
 
 
@@ -179,8 +194,8 @@ def on_music_end():
     global playing
     playing = None
     
-    
-def walking():
+  
+'''def walking():
     global walk
     if walk:
         fish.image = "fish"
@@ -188,7 +203,7 @@ def walking():
     else:
         fish.image = "fish2"
         walk = True
-
+'''
 
 
 pgzrun.go()
