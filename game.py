@@ -1,17 +1,19 @@
 import pgzrun
+from random import randint
 from random import choice
 
 
-TITLE = 'In search of Nemo'
+TITLE = 'shark'
 WIDTH = 518
 HEIGHT = 800
 
 
 # Загрузка изображений
 bg = Actor('background.png')
-fish = Actor('fish')
+img = choice(['fish', 'fish2'])
+fish = Actor(img)
 cave = Actor('cave')
-fish.pos = (451, 748)
+fish.pos = (5, 748)
 cave.x, cave.y = (450, 80)
 
 
@@ -35,6 +37,7 @@ for coordinate in coordinates:
 x, y = 0, 0
 game_over = False
 win = False
+points = 0
 
 def draw():
     bg.draw()
@@ -48,6 +51,7 @@ def draw():
     cave.draw()
     for obstacle in obstacles:
         obstacle.draw()
+    screen.draw.text(f'Очки {points}', center=(WIDTH//2, 30), color='red', fontsize=40)
 
 
 def update(dt):
@@ -66,17 +70,30 @@ def update(dt):
         game_over = True
     if fish.colliderect(cave):
         win = True
+    for obstacle in obstacles:
+        if randint(0 , 1000) <1:
+            obstacle.x += randint(-1,1) 
+            #if obstacle.x < WIDTH//2 :
+            if obstacle.image == 'shark':
+                obstacle.x -= randint(50,100)
+            else:
+                obstacle.x += randint(50,100)
 
 def on_key_down(key):
     global x, y
+    global win , game_over
+    if key == keys.RETURN:
+        win = False
+        game_over = False
+        fish.pos = (451, 748)
     if key == keys.DOWN:
-        y = 0.5
+        y = 1
     if key == keys.UP:
-        y = -0.5
+        y = -1
     if key == keys.LEFT:
-        x = -0.5
+        x = -1
     if key == keys.RIGHT:
-        x = 0.5
+        x = 1
 
 
 pgzrun.go()
