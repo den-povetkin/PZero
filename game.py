@@ -32,7 +32,13 @@ for coordinate in coordinates:
         obj.x = coordinate[0]
         obj.y = coordinate[1]
         obstacles.append(obj)
-
+        
+coins = []
+for i in range(10):
+    coin = Actor('coin')
+    coin.x = randint(0,500)
+    coin.y = randint(0,700)
+    coins.append(coin)
 
 x, y = 0, 0
 game_over = False
@@ -51,6 +57,8 @@ def draw():
     cave.draw()
     for obstacle in obstacles:
         obstacle.draw()
+    for coin in coins:
+        coin.draw()
     screen.draw.text(f'Очки {points}', center=(WIDTH//2, 30), color='red', fontsize=40)
 
 
