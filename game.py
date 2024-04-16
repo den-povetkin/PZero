@@ -8,7 +8,6 @@ WIDTH = 518
 HEIGHT = 800
 
 playing = None
-start_game = None 
 
 music.set_volume(0.5)
 
@@ -19,8 +18,9 @@ img = choice(['fish', 'fish2'])
 fish = Actor(img)
 cave = Actor('cave')
 vol =Actor('vol_on')
+start=Actor('start')
 fish.pos = (5, 748)
-cave.x, cave.y = (450, 120)
+cave.x, cave.y = (450, 150)
 
 
 
@@ -49,42 +49,50 @@ for i in range(10):
 x, y = 0, 0
 game_over = False
 win = False
+start_game = False   
+
 points = 0
 
 def draw():
     bg.draw()
-    if game_over:
-        screen.draw.text(f'GAME OVER', center=(WIDTH//2, HEIGHT//2), color='red', fontsize=100)
-        return
-    if win:
-        screen.draw.text(f'ПОБЕДА!', center=(WIDTH//2, HEIGHT//2), color='green', fontsize=100)
-        return
-    fish.draw()
-    cave.draw()
-    for obstacle in obstacles:
-        obstacle.draw()
-    for coin in coins:
-        coin.draw()
-    screen.draw.text(f'Очки {points}', center=(WIDTH//2, 20), color='red', fontsize=40)
-    '''if not playing:
-        msg = 'Вкл музыку'
+    if start_game == False :
+        start.image = 'start'
+        start.pos = (480,30)
+        start.draw()
     else:
-        msg = 'Выкл музыку '
-    screen.draw.text(msg, fontsize=40, center=(80, 20), color='red')
-    '''
-    if not playing:
-        vol.image = 'vol_on'
-        vol.pos = (30,30)
-        vol.draw()
-    else:
-        vol.image = 'vol_off'
-        vol.pos = (30,30)
-        vol.draw()
-    if not start_game:
-        msg = 'Начать игру'
-    else:
-        msg = 'Выход '
-    screen.draw.text(msg, fontsize=40, center=(500, 20), color='red')
+        start.image = 'stop'
+        start.pos = (480,30)
+        start.draw()
+        
+    if start_game == True:
+        if game_over:
+            screen.draw.text(f'GAME OVER', center=(WIDTH//2, HEIGHT//2), color='red', fontsize=100)
+            return
+        if win:
+            screen.draw.text(f'ПОБЕДА!', center=(WIDTH//2, HEIGHT//2), color='green', fontsize=100)
+            return
+        fish.draw()
+        cave.draw()
+        for obstacle in obstacles:
+            obstacle.draw()
+        for coin in coins:
+            coin.draw()
+        screen.draw.text(f'Очки {points}', center=(WIDTH//2, 20), color='red', fontsize=40)
+        '''if not playing:
+            msg = 'Вкл музыку'
+        else:
+            msg = 'Выкл музыку '
+        screen.draw.text(msg, fontsize=40, center=(80, 20), color='red')
+        '''
+        if not playing:
+            vol.image = 'vol_on'
+            vol.pos = (30,30)
+            vol.draw()
+        else:
+            vol.image = 'vol_off'
+            vol.pos = (30,30)
+            vol.draw()
+        
 
 
 def update(dt):
@@ -144,7 +152,8 @@ def on_key_down(key):
 
 
 def on_mouse_down(pos):
-    global playing
+    global playing, start_game
+    print(pos)
     if  vol.collidepoint(pos):
         if not playing:
             t = tracks.pop(0)
@@ -153,6 +162,13 @@ def on_mouse_down(pos):
             tracks.append(t)
         else:
             music.stop()
+            
+    if  start.collidepoint(pos):
+        if start_game == False :
+            start_game = True
+        else:
+            start_game=False 
+       
             
 
 def on_music_end():
