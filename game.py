@@ -63,7 +63,7 @@ def draw():
 
 
 def update(dt):
-    global game_over, win
+    global game_over, win, points
     fish.x += x
     fish.y += y
     if fish.left < 0:
@@ -78,14 +78,19 @@ def update(dt):
         game_over = True
     if fish.colliderect(cave):
         win = True
+    for coin in coins:
+        if fish.colliderect(coin):
+            coin.pos = (1000, 1000)
+            points += 1  
     for obstacle in obstacles:
         if randint(0 , 1000) <1:
             obstacle.x += randint(-1,1) 
-            #if obstacle.x < WIDTH//2 :
             if obstacle.image == 'shark':
                 obstacle.x -= randint(50,100)
             else:
                 obstacle.x += randint(50,100)
+    
+
 
 def on_key_down(key):
     global x, y
@@ -93,7 +98,7 @@ def on_key_down(key):
     if key == keys.RETURN:
         win = False
         game_over = False
-        fish.pos = (451, 748)
+        fish.pos = (5, 748)
     if key == keys.DOWN:
         y = 1
     if key == keys.UP:
