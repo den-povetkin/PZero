@@ -32,7 +32,6 @@ fish = Player('fish', (5,748))
 cave = Actor('cave')
 vol =Actor('vol_on')
 start=Actor('start')
-#fish.pos = (5, 748)
 cave.x, cave.y = (450, 150)
 
 
@@ -92,12 +91,7 @@ def draw():
         for coin in coins:
             coin.draw()
         screen.draw.text(f'Очки {points}', center=(WIDTH//2, 20), color='red', fontsize=40)
-        '''if not playing:
-            msg = 'Вкл музыку'
-        else:
-            msg = 'Выкл музыку '
-        screen.draw.text(msg, fontsize=40, center=(80, 20), color='red')
-        '''
+
         if not playing:
             vol.image = 'vol_on'
             vol.pos = (30,30)
@@ -121,7 +115,6 @@ def update(dt):
         fish.top = 0
     if fish.bottom > HEIGHT:
         fish.bottom = HEIGHT
-    #if fish.collidelist(obstacles) != -1:
     for obstacle in obstacles:
         if fish.colliderect(obstacle):
             game_over = True
@@ -186,7 +179,8 @@ def on_mouse_down(pos):
         if start_game == False :
             start_game = True
         else:
-            start_game=False 
+            start_game=False
+            
        
             
 
@@ -194,16 +188,4 @@ def on_music_end():
     global playing
     playing = None
     
-  
-'''def walking():
-    global walk
-    if walk:
-        fish.image = "fish"
-        walk = False
-    else:
-        fish.image = "fish2"
-        walk = True
-'''
-
-
 pgzrun.go()
