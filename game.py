@@ -8,7 +8,6 @@ WIDTH = 518
 HEIGHT = 800
 
 playing = None
-
 music.set_volume(0.5)
 
 tracks = ['handel_mp3','handel_ogg']
@@ -49,7 +48,8 @@ for i in range(10):
 x, y = 0, 0
 game_over = False
 win = False
-start_game = False   
+start_game = False
+walk = True
 
 points = 0
 
@@ -142,12 +142,16 @@ def on_key_down(key):
         fish.pos = (5, 748)
     if key == keys.DOWN:
         y = 1
+        walking()
     if key == keys.UP:
         y = -1
+        walking()
     if key == keys.LEFT:
         x = -1
+        walking()
     if key == keys.RIGHT:
         x = 1
+        walking()
 
 
 
@@ -175,7 +179,15 @@ def on_music_end():
     global playing
     playing = None
     
-
+    
+def walking():
+    global walk
+    if walk:
+        fish.image = "fish"
+        walk = False
+    else:
+        fish.image = "fish2"
+        walk = True
 
 
 
