@@ -7,6 +7,16 @@ TITLE = 'shark'
 WIDTH = 518
 HEIGHT = 800
 
+#music.set_volume(0.5)
+#music.play('hhavok-main')
+playing = None
+
+music.set_volume(0.5)
+
+tracks = [
+    'handel_mp3',
+    'handel_ogg',
+]
 
 # Загрузка изображений
 bg = Actor('background.png')
@@ -60,6 +70,11 @@ def draw():
     for coin in coins:
         coin.draw()
     screen.draw.text(f'Очки {points}', center=(WIDTH//2, 30), color='red', fontsize=40)
+    if not playing:
+        msg = 'Вкл музыку'
+    else:
+        msg = 'Выкл музыку '
+    screen.draw.text(msg, fontsize=40, pos=(0, 20), color='red')
 
 
 def update(dt):
@@ -107,6 +122,24 @@ def on_key_down(key):
         x = -1
     if key == keys.RIGHT:
         x = 1
+
+
+
+def on_mouse_down():
+    global playing
+    if not playing:
+        t = tracks.pop(0)
+        music.play(t)
+        playing = t
+        tracks.append(t)
+    else:
+        music.stop(t)
+
+
+def on_music_end():
+    global playing
+    playing = None
+
 
 
 pgzrun.go()
